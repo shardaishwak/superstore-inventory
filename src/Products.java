@@ -25,7 +25,6 @@ public class Products {
                 String category = data[6];
 
 
-
                 products.add(new Product(ID, name, description, Integer.valueOf(quantity), Double.valueOf(price), Double.valueOf(discount), category));
             }
             fileScanner.close();
