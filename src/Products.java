@@ -186,15 +186,6 @@ public class Products {
 
 
 
-
-
-
-
-
-
-
-
-
     /*
         Find a product by ID using TODO: BINARY SEARCH
         Return the index of the item
@@ -275,22 +266,6 @@ public class Products {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     // Binary search for ID
     public static ArrayList<Product> binarySort(ArrayList<Product> products) {
         for (int i = products.size() - 1; i >= 0; i--) {
@@ -304,12 +279,6 @@ public class Products {
         }
         return products;
     }
-
-
-
-
-
-
 
 
 

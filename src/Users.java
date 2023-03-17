@@ -10,13 +10,19 @@ import java.util.Scanner;
 // TODO cache users: make app more efficient: do not read all times!
 
 public class Users {
+    // List of all the users in the cache
     private static ArrayList<User> users = new ArrayList<>();
+    // DB file path
     public static String path = "./src/DB/users.txt";
 
+    // Constructor if required
     public Users() {
         load();
     }
 
+    /*
+        Load data from the DB
+     */
     public static void load() {
         ArrayList<User> temp_users = new ArrayList<User>();
         try {
@@ -42,29 +48,50 @@ public class Users {
         }
         users = temp_users;
     }
-    public static ArrayList<User> getUsers() {
-        return users;
-    }
 
-    public static void appendUser(User user) {
-        // get list of users
-        ArrayList<User> temp_users = users;
-        // Add the user
-        temp_users.add(user);
-        //user = binarySort(user);
+    /*
+        Sync current cache with the database
+     */
+    public static void syncUsers() {
         try {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
-            for (User i : temp_users) {
+            for (User i : users) {
                 writer.println(i.toStringWithPassword());
             }
             writer.close();
         } catch(Exception err) {
             System.out.println(err.getMessage());
         }
+    }
+
+
+    /*
+        CRUD operations
+     */
+
+    /*
+        Get the users
+     */
+    public static ArrayList<User> getUsers() {
+        return users;
+    }
+    /*
+        Add a new user to the list
+     */
+    public static void appendUser(User user) {
+        // get list of users
+        ArrayList<User> temp_users = users;
+        // Add the user
+        temp_users.add(user);
         // Update the cache
         users = temp_users;
+
+        syncUsers();
     }
+    /*
+        Update the users list
+     */
     public static User updateUser(String ID, User new_user) {
         ArrayList<User> temp_users = users;
         int index = findUserByID(ID);
@@ -76,20 +103,15 @@ public class Users {
 
         temp_users.set(index, new_user);
 
-        try {
-            FileWriter writer = new FileWriter(path);
-            for (User user : temp_users) {
-                writer.write(user.toStringWithPassword());
-            }
-            writer.close();
-        } catch(Exception err) {
-            System.out.println(err.getMessage());
-        }
         users = temp_users;
+        syncUsers();
         return new_user;
     }
 
-    // implement binary search
+    /*
+        Find a user by Email
+        TODO: Implement Binary search for O(nlog)
+     */
     public static int findUserByEmail(String email) {
         ArrayList<User> users = getUsers();
         for (int i = 0; i < users.size(); i++) {
@@ -97,7 +119,11 @@ public class Users {
         }
         return -1;
     }
-    // implement binary search
+
+    /*
+        Find a user by ID
+        O(n)
+     */
     public static int findUserByID(String id) {
         ArrayList<User> users = getUsers();
         for (int i = 0; i < users.size(); i++) {
@@ -107,7 +133,14 @@ public class Users {
     }
 
     // TODO: Delete user by ID
+    public static boolean deleteUser(String id) {
+        // Remove the items from bucket
+        return true;
+    }
 
+    /*
+        Return a tabloid printout of the users
+     */
     public static void tabloidPrint() {
 
         int maxName = 0;
