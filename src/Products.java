@@ -62,11 +62,10 @@ public class Products {
         Syncronize the local cache with the file after any change made to local cache
      */
     public static void syncProducts() {
-        // TODO: sort them by id before saving
         try {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
-            for (Product i : products) {
+            for (Product i : binarySort(products)) {
                 writer.println(i);
             }
             writer.close();
@@ -266,11 +265,39 @@ public class Products {
 
 
 
-    // Binary search for ID
-    public static ArrayList<Product> binarySort(ArrayList<Product> products) {
+    /*
+        Sort the list by:
+            - Name
+            - Category
+            - Id
+            - Quantity
+            - Price
+            - Discount
+     */
+    public static ArrayList<Product> binarySort(ArrayList<Product> products, String sortBy, boolean descending) {
         for (int i = products.size() - 1; i >= 0; i--) {
-            for (int j = 0; j < i-1; j++) {
-                if (products.get(j).getName().compareTo(products.get(j+1).getName()) > 0) {
+            for (int j = 0; j < i; j++) {
+                int comparison;
+                if (sortBy.equals("name")) {
+                    comparison = products.get(j).getName().compareTo(products.get(j+1).getName());
+                }
+                else if (sortBy.equals("category")) {
+                    comparison = products.get(j).getCategory().compareTo(products.get(j+1).getCategory());
+                }
+                else if (sortBy.equals("price")) {
+                    comparison = Double.compare(products.get(j).getPrice(), products.get(j+1).getPrice());
+                }
+                else if (sortBy.equals("discount")) {
+                    comparison = Double.compare(products.get(j).getDiscount(), products.get(j+1).getDiscount());
+                }
+                else if (sortBy.equals("quantity")) {
+                    comparison = products.get(j).getQuantity() - products.get(j+1).getQuantity();
+                }
+                else {
+                    comparison = products.get(j).getID().compareTo(products.get(j+1).getID());
+                }
+
+                if (descending ? comparison < 0 : comparison > 0) {
                     Product temp = products.get(j);
                     products.set(j, products.get(j+1));
                     products.set(j+1, temp);
@@ -278,6 +305,10 @@ public class Products {
             }
         }
         return products;
+    }
+
+    public static ArrayList<Product> binarySort(ArrayList<Product> products) {
+        return binarySort(products, "id", false);
     }
 
 

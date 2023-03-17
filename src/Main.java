@@ -11,6 +11,8 @@ public class Main {
         // Load all the products from the DB
         Products.load();
 
+        //Products.syncProducts();
+
         // get auth state
 
         //Products.tabloidPrint(Products.findProductsByCategory());
