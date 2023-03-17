@@ -1,13 +1,7 @@
-// Handle all the logic about creating or writing users
-// Move the logic of user from authentication to here
-
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
-
-// TODO cache users: make app more efficient: do not read all times!
 
 public class Users {
     // List of all the users in the cache
@@ -110,7 +104,6 @@ public class Users {
 
     /*
         Find a user by Email
-        TODO: Implement Binary search for O(nlog)
      */
     public static int findUserByEmail(String email) {
         ArrayList<User> users = getUsers();
@@ -125,16 +118,32 @@ public class Users {
         O(n)
      */
     public static int findUserByID(String id) {
-        ArrayList<User> users = getUsers();
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getID().equals(id)) return i;
+        int low = 0;
+        int high = users.size()-1;
+
+        while(low <= high) {
+            int mid = (high+low)/2;
+            if (users.get(mid).getID().equals(id)) return mid;
+            else if (users.get(mid).getID().compareTo(id) > 0) high = low - 1;
+            else low = mid + 1;
         }
         return -1;
     }
 
-    // TODO: Delete user by ID
+    /*
+        Delete a user and all data associated to it.
+     */
     public static boolean deleteUser(String id) {
         // Remove the items from bucket
+        int index = Users.findUserByID(id);
+        if (index == -1) {
+            System.out.println("User not found in DB. Delete failed.");
+            return false;
+        }
+
+        users.remove(index);
+        syncUsers();
+
         return true;
     }
 

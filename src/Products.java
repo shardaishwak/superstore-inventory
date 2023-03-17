@@ -1,7 +1,5 @@
 import java.io.File;
-import java.io.FileWriter;
 import java.io.PrintWriter;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -102,9 +100,6 @@ public class Products {
 
     }
 
-
-
-
     // Prompts for creating a new product
     public static Product createProduct() {
 
@@ -162,7 +157,6 @@ public class Products {
         return new_product;
     }
 
-
     /*
         Remove a product by ID
      */
@@ -190,8 +184,14 @@ public class Products {
         Return the index of the item
      */
     public static int findProductByID(String ID) {
-        for (int i = 0; i < products.size(); i++) {
-            if (products.get(i).getID().equals(ID)) return i;
+        int low = 0;
+        int high = products.size()-1;
+
+        while(low <= high) {
+            int mid = (high+low)/2;
+            if (products.get(mid).getID().equals(ID)) return mid;
+            else if (products.get(mid).getID().compareTo(ID) > 0) high = low - 1;
+            else low = mid + 1;
         }
         return -1;
     }

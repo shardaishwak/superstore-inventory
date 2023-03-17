@@ -11,11 +11,7 @@ public class Main {
         // Load all the products from the DB
         Products.load();
 
-        Users.syncUsers();
-
         // get auth state
-
-
 
         String controller = ""; // the controller shows different actions that we can perform
         // possibilities: "auth", "inventory", "shopper"
