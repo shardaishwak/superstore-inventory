@@ -13,15 +13,8 @@ public class Products {
 
     // Load all the products constructor
     public Products() {
-        LoadProducts();
+        load();
     }
-
-
-
-
-
-
-
 
 
 
@@ -29,7 +22,7 @@ public class Products {
         Load all products method: called in constructor or anywhere in the app
         It fetches all the products and saves them in cache
      */
-    public static void LoadProducts() {
+    public static void load() {
         // creating empty temporary array that will store the products list
         ArrayList<Product> tproducts = new ArrayList<Product>();
 
@@ -66,7 +59,24 @@ public class Products {
     }
 
     /*
-        REturn the list of products in the cache
+        Syncronize the local cache with the file after any change made to local cache
+     */
+    public static void syncProducts() {
+        // TODO: sort them by id before saving
+        try {
+            // Update the file with sorting
+            PrintWriter writer = new PrintWriter(path);
+            for (Product i : products) {
+                writer.println(i);
+            }
+            writer.close();
+        } catch(Exception err) {
+            System.out.println(err.getMessage());
+        }
+    }
+
+    /*
+        Return the list of products in the cache
      */
     public static ArrayList<Product> getProducts() {
         // REturn the list of products
@@ -86,19 +96,15 @@ public class Products {
         // Add the product
         temp_products.add(product);
         //products = binarySort(products);
-        try {
-            // Update the file with sorting
-            PrintWriter writer = new PrintWriter(path);
-            for (Product i : temp_products) {
-                writer.println(i);
-            }
-            writer.close();
-        } catch(Exception err) {
-            System.out.println(err.getMessage());
-        }
         // Update the cache
         products = temp_products;
+        // SYNC
+        syncProducts();
+
     }
+
+
+
 
     // Prompts for creating a new product
     public static Product createProduct() {
@@ -149,34 +155,33 @@ public class Products {
 
         // Update the position with new list
         temp_products.set(index, new_product);
-
-        try {
-            // Update the file
-            FileWriter writer = new FileWriter(path);
-            for (Product product : temp_products) {
-                writer.write(product.toString());
-            }
-            writer.close();
-        } catch(Exception err) {
-            System.out.println(err.getMessage());
-        }
         // update cache
         products = temp_products;
+        //SYNC
+        syncProducts();
+
         return new_product;
     }
 
 
+    /*
+        Remove a product by ID
+     */
+    public static boolean deleteProductById(String ID) {
+        int index = findProductByID(ID);
 
+        // check if the product does exist
+        if (index == -1) {
+            System.out.println("Product does not exist.");
+            return false;
+        }
 
-
-
-
-
-
-
-
-    // TODO: Delete product by ID
-    public static boolean deleteProductById(String ID) {return false;}
+        // Update products
+        products.remove(index);
+        // SYNC
+        syncProducts();
+        return true;
+    }
 
 
 

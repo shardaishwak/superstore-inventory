@@ -14,10 +14,10 @@ public class Users {
     public static String path = "./src/DB/users.txt";
 
     public Users() {
-        LoadUsers();
+        load();
     }
 
-    public static void LoadUsers() {
+    public static void load() {
         ArrayList<User> temp_users = new ArrayList<User>();
         try {
             File file = new File(path);
@@ -56,7 +56,7 @@ public class Users {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
             for (User i : temp_users) {
-                writer.println(i);
+                writer.println(i.toStringWithPassword());
             }
             writer.close();
         } catch(Exception err) {
@@ -125,7 +125,7 @@ public class Users {
         String format = "|"+"%-"+(maxID+2)+"s"+"|"+"%-"+(maxName+2)+"s"+"|"+"%-"+(maxEmail+2)+"s"+"|"+"%-"+(maxRole+2)+"s\n";
         System.out.println();
         System.out.printf(format, "ID", "Name", "Email", "Role");
-        for (User user : getUsers()) {
+        for (User user : users) {
             System.out.printf(format, user.getID(), user.getName(), user.getEmail(), user.getRole());
         }
         System.out.println();

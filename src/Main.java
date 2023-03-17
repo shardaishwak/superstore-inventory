@@ -2,9 +2,15 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        // Initialize authentication object
         Authentication auth = new Authentication();
-        Products.LoadProducts();
-        Users.LoadUsers();
+
+        // Load add the users from the DB
+        Users.load();
+
+        // Load all the products from the DB
+        Products.load();
+
         // get auth state
 
         //Products.tabloidPrint(Products.findProductsByCategory());
