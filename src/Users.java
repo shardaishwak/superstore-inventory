@@ -3,17 +3,22 @@
 
 import java.io.File;
 import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // TODO cache users: make app more efficient: do not read all times!
 
 public class Users {
-
+    private static ArrayList<User> users = new ArrayList<>();
     public static String path = "./src/DB/users.txt";
 
-    public static ArrayList<User> getUsers() {
-        ArrayList<User> users = new ArrayList<User>();
+    public Users() {
+        LoadUsers();
+    }
+
+    public static void LoadUsers() {
+        ArrayList<User> temp_users = new ArrayList<User>();
         try {
             File file = new File(path);
             Scanner fileScanner = new Scanner(file);
@@ -28,39 +33,59 @@ public class Users {
                 String password = data[3];
                 String role = data[4];
 
-                users.add(new User(ID, name, email, password, role));
+                temp_users.add(new User(ID, name, email, password, role));
             }
             fileScanner.close();
 
         } catch(Exception err) {
             System.out.println(err.getMessage());
         }
+        users = temp_users;
+    }
+    public static ArrayList<User> getUsers() {
         return users;
     }
 
     public static void appendUser(User user) {
-        Utilities.appendFile(Users.path, user.toStringWithPassword());
+        // get list of users
+        ArrayList<User> temp_users = users;
+        // Add the user
+        temp_users.add(user);
+        //user = binarySort(user);
+        try {
+            // Update the file with sorting
+            PrintWriter writer = new PrintWriter(path);
+            for (User i : temp_users) {
+                writer.println(i);
+            }
+            writer.close();
+        } catch(Exception err) {
+            System.out.println(err.getMessage());
+        }
+        // Update the cache
+        users = temp_users;
     }
     public static User updateUser(String ID, User new_user) {
-        ArrayList<User> users = getUsers();
-        int index = (findUserByID(ID));
+        ArrayList<User> temp_users = users;
+        int index = findUserByID(ID);
 
         if (index == -1) {
             System.out.println("ERROR:USERS:UPDATE-USER:User not found");
             return null;
         }
 
-        users.set(index, new_user);
+        temp_users.set(index, new_user);
 
         try {
             FileWriter writer = new FileWriter(path);
-            for (User user : users) {
+            for (User user : temp_users) {
                 writer.write(user.toStringWithPassword());
             }
             writer.close();
         } catch(Exception err) {
             System.out.println(err.getMessage());
         }
+        users = temp_users;
         return new_user;
     }
 
@@ -89,7 +114,7 @@ public class Users {
         int maxID = 0;
         int maxEmail = 0;
         int maxRole = 0;
-        for (User user : getUsers()) {
+        for (User user : users) {
             if (user.getID().length() > maxID) maxID = user.getID().length();
             if (user.getName().length() > maxName) maxName = user.getName().length();
             if (user.getEmail().length() > maxEmail) maxEmail = user.getEmail().length();

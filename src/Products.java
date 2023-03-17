@@ -200,7 +200,7 @@ public class Products {
         int maxQuantity = "Quantity".length();
         int maxPrice = "Price".length();
         int maxDiscount = "Discount".length();
-        for (Product product : (getProducts())) {
+        for (Product product : products) {
             if (product.getID().length() > maxID) maxID = product.getID().length();
             if (product.getName().length() > maxName) maxName = product.getName().length();
             if (product.getDescription().length() > maxDescription) maxDescription = product.getDescription().length();
