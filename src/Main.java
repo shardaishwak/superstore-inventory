@@ -11,11 +11,10 @@ public class Main {
         // Load all the products from the DB
         Products.load();
 
-        //Products.syncProducts();
+        Users.syncUsers();
 
         // get auth state
 
-        //Products.tabloidPrint(Products.findProductsByCategory());
 
 
         String controller = ""; // the controller shows different actions that we can perform

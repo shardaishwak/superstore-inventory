@@ -65,7 +65,7 @@ public class Products {
         try {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
-            for (Product i : binarySort(products)) {
+            for (Product i : bubbleSort(products)) {
                 writer.println(i);
             }
             writer.close();
@@ -274,7 +274,7 @@ public class Products {
             - Price
             - Discount
      */
-    public static ArrayList<Product> binarySort(ArrayList<Product> products, String sortBy, boolean descending) {
+    public static ArrayList<Product> bubbleSort(ArrayList<Product> products, String sortBy, boolean descending) {
         for (int i = products.size() - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
                 int comparison;
@@ -307,8 +307,8 @@ public class Products {
         return products;
     }
 
-    public static ArrayList<Product> binarySort(ArrayList<Product> products) {
-        return binarySort(products, "id", false);
+    public static ArrayList<Product> bubbleSort(ArrayList<Product> products) {
+        return bubbleSort(products, "id", false);
     }
 
 
@@ -317,7 +317,7 @@ public class Products {
 
     // Print the tabloid format of the products
     public static void tabloidPrint() {
-        tabloidPrint(products);
+        tabloidPrint(bubbleSort(products));
     }
 
     public static void tabloidPrint(ArrayList<Product> products) {

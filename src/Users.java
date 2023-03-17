@@ -56,7 +56,7 @@ public class Users {
         try {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
-            for (User i : users) {
+            for (User i : bubbleSort(users)) {
                 writer.println(i.toStringWithPassword());
             }
             writer.close();
@@ -138,10 +138,52 @@ public class Users {
         return true;
     }
 
+
+
+
+    /*
+        Sort the list by:
+            - Name
+            - Email
+            - Id
+     */
+    public static ArrayList<User> bubbleSort(ArrayList<User> users, String sortBy, boolean descending) {
+        for (int i = users.size() - 1; i >= 0; i--) {
+            for (int j = 0; j < i; j++) {
+                int comparison;
+                if (sortBy.equals("name")) {
+                    comparison = users.get(j).getName().compareTo(users.get(j+1).getName());
+                }
+                else if (sortBy.equals("email")) {
+                    comparison = users.get(j).getEmail().compareTo(users.get(j+1).getEmail());
+                }
+                else {
+                    comparison = users.get(j).getID().compareTo(users.get(j+1).getID());
+                }
+
+                if (descending ? comparison < 0 : comparison > 0) {
+                    User temp = users.get(j);
+                    users.set(j, users.get(j+1));
+                    users.set(j+1, temp);
+                }
+            }
+        }
+        return users;
+    }
+
+    public static ArrayList<User> bubbleSort(ArrayList<User> users) {
+        return bubbleSort(users, "id", false);
+    }
+
     /*
         Return a tabloid printout of the users
      */
     public static void tabloidPrint() {
+
+        tabloidPrint(bubbleSort(users));
+    }
+
+    public static void tabloidPrint(ArrayList<User> users) {
 
         int maxName = 0;
         int maxID = 0;
