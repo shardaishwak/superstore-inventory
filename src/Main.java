@@ -3,6 +3,7 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         Authentication auth = new Authentication();
+        Products products = new Products(); // Load products
         // get auth state
 
 
