@@ -5,6 +5,7 @@ public class Product {
     private String category;
     private int quantity;
     private double price;
+    // Percentage value of the discount
     private double discount;
 
     public Product(String ID, String name, String description, int quantity, double price, double discount, String category) {

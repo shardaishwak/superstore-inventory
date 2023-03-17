@@ -7,7 +7,7 @@ public class Main {
         Users.LoadUsers();
         // get auth state
 
-
+        //Products.tabloidPrint(Products.findProductsByCategory());
 
 
         String controller = ""; // the controller shows different actions that we can perform
@@ -46,6 +46,8 @@ public class Main {
 
             System.out.println();
         }
+
+
     }
 
     public static void printAuthOptions() {

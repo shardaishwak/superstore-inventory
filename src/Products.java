@@ -16,8 +16,19 @@ public class Products {
         LoadProducts();
     }
 
-    // Load all products method: called in constructor or anywhere in the app
-    // It fetches all the products and saves them in cache
+
+
+
+
+
+
+
+
+
+    /*
+        Load all products method: called in constructor or anywhere in the app
+        It fetches all the products and saves them in cache
+     */
     public static void LoadProducts() {
         // creating empty temporary array that will store the products list
         ArrayList<Product> tproducts = new ArrayList<Product>();
@@ -53,15 +64,22 @@ public class Products {
         // Update the cache.
         products = tproducts;
     }
+
+    /*
+        REturn the list of products in the cache
+     */
     public static ArrayList<Product> getProducts() {
         // REturn the list of products
         return products;
     }
-    // Add a new product to the list
-    // Update the database file as well as local cache
-    // iWill apply the bubble sort sorting, by index as ID
-    // We will use binary search to search by ID nlogN
-    // all the other search will be O(n)
+    /*
+        Add a new product to the list
+        Update the database file as well as local cache
+        Will apply the bubble sort sorting, by index as ID
+        We will use binary search to search by ID nlogN
+        all the other search will be O(n)
+     */
+
     public static void appendProduct(Product product) {
         // get list of products
         ArrayList<Product> temp_products = products;
@@ -147,33 +165,125 @@ public class Products {
         return new_product;
     }
 
+
+
+
+
+
+
+
+
+
+
     // TODO: Delete product by ID
     public static boolean deleteProductById(String ID) {return false;}
 
-    public static int findProductByID(String ID) {
-        ArrayList<Product> products = getProducts();
 
+
+
+
+
+
+
+
+
+
+
+
+    /*
+        Find a product by ID using TODO: BINARY SEARCH
+        Return the index of the item
+     */
+    public static int findProductByID(String ID) {
         for (int i = 0; i < products.size(); i++) {
             if (products.get(i).getID().equals(ID)) return i;
         }
         return -1;
     }
-    public static int findProductsByName(String ID) {
+    /*
+        Search products by the name: will check if it is an exact match
+     */
+    public static ArrayList<Product> findProductsByName(String name) {
+        ArrayList<Product> temp_products = new ArrayList<>();
 
+        for (Product product : products) {
+            if (product.getName().toLowerCase().equals(name.toLowerCase())) temp_products.add(product);
+        }
         // can find more than one product!
-        return -1;
+        return temp_products;
     }
-    public static int findProductsByPrice(double price) {
-        return -1;
+    /*
+        Find a product by the category
+     */
+    public static ArrayList<Product> findProductsByCategory(String category) {
+        ArrayList<Product> temp_products = new ArrayList<>();
+
+        for (Product product : products) {
+            if (product.getCategory().toLowerCase().equals(category.toLowerCase())) temp_products.add(product);
+        }
+        // can find more than one product!
+        return temp_products;
     }
-    public static int findProductsByQuantity(int quantity) {
-        return -1;
+    /*
+        Find list of all the products with price less or equal to the one given. The returned list will be sorted
+     */
+    public static ArrayList<Product> findProductsByPrice(double price) {
+        ArrayList<Product> temp_products = new ArrayList<>();
+
+        for (Product product : products) {
+            if (Double.compare(product.getPrice(), price) <= 0) {
+                temp_products.add(product);
+            }
+        }
+        return temp_products;
     }
-    public static int findProductsByDiscount(double discount) {
-        return -1;
+    /*
+        Find products by discount: if entered minimum discount threshold, will return all the discounts greater or equal t
+        the one given.
+        Order in descending order
+     */
+    public static ArrayList<Product> findProductsByDiscount(double discount) {
+        ArrayList<Product> temp_products = new ArrayList<>();
+
+        for (Product product : products) {
+            if (Double.compare(product.getDiscount(), discount) >= 0) {
+                temp_products.add(product);
+            }
+        }
+        return temp_products;
     }
 
-    public static int findProductsByCategory(String category) {return -1;}
+    /*
+        Find products by discount: return all products on discount: sort them in descending order
+     */
+    public static ArrayList<Product> findProductsByDiscount() {
+        ArrayList<Product> temp_products = new ArrayList<>();
+
+        for (Product product : products) {
+            if (Double.compare(product.getDiscount(), 0) > 0) {
+                temp_products.add(product);
+            }
+        }
+        return temp_products;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     // Binary search for ID
@@ -191,8 +301,21 @@ public class Products {
     }
 
 
+
+
+
+
+
+
+
+
+
     // Print the tabloid format of the products
     public static void tabloidPrint() {
+        tabloidPrint(products);
+    }
+
+    public static void tabloidPrint(ArrayList<Product> products) {
         int maxName = "Name".length();
         int maxID = "ID".length();
         int maxDescription = "Description".length();
@@ -214,7 +337,7 @@ public class Products {
         String format = "|"+"%-"+(maxID+2)+"s"+"|"+"%-"+(maxName+2)+"s"+"|"+"%-"+(maxCategory+2)+"s"+"|"+"%-"+(maxDescription+2)+"s"+"|"+"%-"+(maxQuantity+2)+"s"+"|"+"%-"+(maxPrice+5)+"s"+"|"+"%-"+(maxDiscount+2)+"s\n";
         System.out.println();
         System.out.printf(format, "ID", "Name", "Category","Description", "Qty. ", "Price", "Discount");
-        for (Product product : getProducts()) {
+        for (Product product : products) {
             System.out.printf(format, product.getID(), product.getName(), product.getCategory(), product.getDescription(), String.valueOf(product.getQuantity()), String.valueOf(product.getPrice()) + " CA$", String.valueOf(product.getDiscount()));
         }
         System.out.println();
