@@ -124,7 +124,7 @@ public class Users {
         while(low <= high) {
             int mid = (high+low)/2;
             if (users.get(mid).getID().equals(id)) return mid;
-            else if (users.get(mid).getID().compareTo(id) > 0) high = low - 1;
+            else if (users.get(mid).getID().compareTo(id) > 0) high = mid - 1;
             else low = mid + 1;
         }
         return -1;
@@ -193,7 +193,10 @@ public class Users {
     }
 
     public static void tabloidPrint(ArrayList<User> users) {
-
+        if (users == null) {
+            System.out.println("No user found.");
+            return;
+        }
         int maxName = 0;
         int maxID = 0;
         int maxEmail = 0;

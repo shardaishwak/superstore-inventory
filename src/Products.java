@@ -1,6 +1,7 @@
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+
 import java.util.Scanner;
 
 public class Products {
@@ -176,7 +177,28 @@ public class Products {
         return true;
     }
 
-
+    /*
+        Main search method for the client-side
+     */
+    public static ArrayList<Product> search(String filter, String value) {
+        if (filter.equals("id")) {
+            int index = findProductByID(value);
+            if (index == -1) return null;
+            else {
+                ArrayList<Product> temp = new ArrayList<>();
+                temp.add(products.get(index));
+                return temp;
+            }
+        }
+        else if (filter.equals("name")) return findProductsByName(value);
+        else if (filter.equals("category")) return findProductsByCategory(value);
+        else if (filter.equals("price")) return findProductsByPrice(Double.parseDouble(value));
+        else if (filter.equals("discount")) return findProductsByDiscount(Double.parseDouble(value));
+        else {
+            System.out.println("Filter '" + filter +"' not found.");
+            return null;
+        }
+    }
 
 
     /*
@@ -190,7 +212,7 @@ public class Products {
         while(low <= high) {
             int mid = (high+low)/2;
             if (products.get(mid).getID().equals(ID)) return mid;
-            else if (products.get(mid).getID().compareTo(ID) > 0) high = low - 1;
+            else if (products.get(mid).getID().compareTo(ID) > 0) high = mid - 1;
             else low = mid + 1;
         }
         return -1;
@@ -321,6 +343,10 @@ public class Products {
     }
 
     public static void tabloidPrint(ArrayList<Product> products) {
+        if (products == null) {
+            System.out.println("No product found.");
+            return;
+        }
         int maxName = "Name".length();
         int maxID = "ID".length();
         int maxDescription = "Description".length();

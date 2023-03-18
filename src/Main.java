@@ -1,3 +1,6 @@
+import jdk.jshell.execution.Util;
+
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Main {
@@ -40,11 +43,14 @@ public class Main {
                 // inventory controller
                 feedbackToQuit = adminController(auth);
             } else {
+                System.out.println("SHOPPER OPTIONS");
                 if (!controller.equals("shopper")) {
                     // print the new commands
+                    printShopperOptions();
                     controller = "shopper";
                 }
                 // shopper controller
+                feedbackToQuit = shopperController(auth);
             }
 
             System.out.println();
@@ -54,42 +60,89 @@ public class Main {
     }
 
     public static void printAuthOptions() {
-        System.out.println();
+        String[][] options = {
+                {"options", "Show all the available commands", ""},
+                {"create-user", "Create a new account in the system", ""},
+                {"login", "Login into the system", ""},
+                {"", "", ""},
+                {"exit", "Exit the system", ""}
+        };
 
-        System.out.println("| COMMAND           | ACTION");
-        System.out.println("| options           | Simply print the options");
-        System.out.println("| create-user       | Create a new user");
-        System.out.println("| login             | Login");
-
-        System.out.println("| exit              | exit system");
-        System.out.println();
+        Utilities.printOptions(options);
     }
 
     public static void printAdminOptions() {
-        System.out.println();
+        String[][] options = {
+                {"user", "Get the current user", ""},
+                {"show-users", "Show the list of all the users in database", ""},
+                {"update-password", "Update the current password", ""},
+                {"logout", "Logout from system", ""},
+                {"", "", ""},
+                {"create-product", "Create a new product in the database", ""},
+                {"update-product", "Update information about a particular product", ""},
+                {"show-products", "Show all products in the database", ""},
+                {"search", "Search for a particular product. For example 'search category cheese' or 'search price 23.99'.", "search [filter] [value]"},
+                {"", "Filter by category, name, id, price, discount", ""},
+                {"", "", ""},
+                {"exit", "Exit the system", ""}
+        };
 
+        Utilities.printOptions(options);
+    }
 
-        System.out.println("| Command           | Action");
+    public static void printShopperOptions() {
+        String[][] options = {
+                {"options", "Print available commands", ""},
+                {"user", "Get the current user", ""},
+                {"update-password", "Update the current password", ""},
+                {"logout", "Logout from system", ""},
+                {"", "", ""},
+                {"search", "Search for a particular product. For example 'search category cheese' or 'search price 23.99'.", "search [filter] [value]"},
+                {"", "Filter by category, name, id, price, discount", ""},
+                {"", "Price and discount filters return products with price equal or less than the given.", ""},
+                {"", "", ""},
+                {"exit", "Exit the system", ""}
+        };
 
-        System.out.println("| user              | Get current user");
-        System.out.println("| show-users        | Show all users in database");
-        System.out.println("| update-password   | Update password");
-        System.out.println("| logout            | Logout");
+        Utilities.printOptions(options);
+    }
 
+    public static boolean authController(Authentication auth) {
+        Scanner scanner = new Scanner(System.in);
 
-        System.out.println();
-        System.out.println("| create-product    | Create a new product");
-        System.out.println("| update-product    | Update a product by a particular field");
-        System.out.println("| show-products     | Show all products in database");
-        System.out.println("| exit              | Exit system");
-        System.out.println();
+        System.out.print("Enter the option: ");
+        String fullCommand = scanner.nextLine();
+        String option = fullCommand.split(" ")[0];
+
+        switch(option) {
+            case "options": {
+                printAuthOptions();
+                break;
+            }
+            case "create-user": {
+                auth.createUser();
+                break;
+            }
+            case "login": {
+                auth.loginUser();
+                break;
+            }
+            case "exit": {
+                return true;
+            }
+            default: {
+                System.out.println("Invalid command. Not found.");
+            }
+        }
+        return false;
     }
 
     public static boolean adminController(Authentication auth) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the option: ");
-        String option = scanner.nextLine();
+        String fullCommand = scanner.nextLine();
+        String option = fullCommand.split(" ")[0];
 
         switch(option) {
             case "options": {
@@ -121,6 +174,15 @@ public class Main {
                 Products.tabloidPrint();
                 break;
             }
+            case "search": {
+                String[] values = fullCommand.split(" ");
+                if (values.length < 3) {
+                    System.out.println("Invalid search command. Expected format: search [filter] [value]");
+                    break;
+                }
+                Products.tabloidPrint(Products.search(values[1], Utilities.joinArray(values, 2)));
+                break;
+            }
             case "exit": {
                 return true;
             }
@@ -130,23 +192,17 @@ public class Main {
         }
         return false;
     }
-    public static boolean authController(Authentication auth) {
+
+    public static boolean shopperController(Authentication auth) {
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("Enter the option: ");
-        String option = scanner.nextLine();
+        String fullCommand = scanner.nextLine();
+        String option = fullCommand.split(" ")[0];
 
         switch(option) {
             case "options": {
-                printAuthOptions();
-                break;
-            }
-            case "create-user": {
-                auth.createUser();
-                break;
-            }
-            case "login": {
-                auth.loginUser();
+                printShopperOptions();
                 break;
             }
             case "user": {
@@ -157,6 +213,15 @@ public class Main {
                 auth.logout();
                 break;
             }
+            case "search": {
+                String[] values = fullCommand.split(" ");
+                if (values.length < 3) {
+                    System.out.println("Invalid search command. Expected format: search [filter] [value]");
+                    break;
+                }
+                Products.tabloidPrint(Products.search(values[1], Utilities.joinArray(values, 2)));
+                break;
+            }
             case "exit": {
                 return true;
             }
@@ -166,4 +231,5 @@ public class Main {
         }
         return false;
     }
+
 }

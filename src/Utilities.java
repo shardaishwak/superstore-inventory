@@ -10,13 +10,44 @@ public class Utilities {
         return name.replace(' ', '-') + "-" + randomSeed;
     }
 
-    public static void appendFile(String path, String line) {
-        try {
-            FileWriter writer = new FileWriter(path, true);
-            writer.write(line+"\n");
-            writer.close();
-        } catch(Exception err) {
-            System.out.println(err.getMessage());
+    public static void printOptions(String[][] options) {
+        int maxLengthCommand = "Command".length();
+        int maxLengthAction = "Description".length();
+        int maxLengthFormat = "Format".length();
+
+        for (String[] option : options) {
+            if (option[0].length() > maxLengthCommand) maxLengthCommand = option[0].length();
+            if (option[1].length() > maxLengthAction) maxLengthAction = option[1].length();
+            if (option[2].length() > maxLengthFormat) maxLengthFormat = option[2].length();
         }
+
+        String format = "|"+"%-"+(maxLengthCommand+2)+"s"+"|"+"%-"+(maxLengthAction+2)+"s"+"|"+"%-"+(maxLengthFormat+2)+"s\n";
+
+        System.out.printf(format, "Command", "Description", "Format");
+        System.out.println();
+        for (String[] option : options) {
+            if (Utilities.joinArray(option).trim().equals("")) {
+                System.out.println();
+            } else if (option[0].equals("") && option[2].equals("")) {
+                System.out.printf(" "+"%-"+(maxLengthCommand+2)+"s"+" "+"%-"+(maxLengthAction+2)+"s"+" "+"%-"+(maxLengthFormat+2)+"s\n", option[0], option[1], option[2]);
+            } else System.out.printf(format, option[0], option[1], option[2]);
+        }
+        System.out.println();
+
+    }
+
+    public static String joinArray(String[] values) {
+        return joinArray(values, 0, values.length);
+    }
+    public static String joinArray(String[] values, int from) {
+        return joinArray(values, from, values.length);
+    }
+    public static String joinArray(String[] values, int from, int to) {
+        String str = "";
+        for (int i = from; i < to; i++) {
+            str+=values[i];
+            if (i < to-1) str+=" ";
+        }
+        return str;
     }
 }
