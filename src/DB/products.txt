@@ -1,4 +1,4 @@
-product-33416202~New thing~Woww product~122~34.44~0.0~sfds
+product-33416202~New thing~Woww product~0~34.44~0.0~sfds
 product-52946649~fds~fdfsf~33~22.0~0.0~fdfsf
 product-69961576~Cheese~THis is some nce italian cheese~200~12.67~0.15~Italian
 product-85089922~ishwak09~fsd~34~45.55~0.0~fds

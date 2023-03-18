@@ -431,7 +431,7 @@ public class Products {
         int maxID = "ID".length();
         int maxDescription = "Description".length();
         int maxCategory = "Category".length();
-        int maxQuantity = "Quantity".length();
+        int maxQuantity = "Out of Stock".length();
         int maxPrice = "Price".length();
         int maxDiscount = "Discount".length();
         for (Product product : products) {
@@ -449,7 +449,7 @@ public class Products {
         System.out.println();
         System.out.printf(format, "ID", "Name", "Category","Description", "Qty. ", "Price", "Discount");
         for (Product product : products) {
-            System.out.printf(format, product.getID(), product.getName(), product.getCategory(), product.getDescription(), String.valueOf(product.getQuantity()), String.valueOf(product.getPrice()) + " CA$", String.valueOf(product.getDiscount()));
+            System.out.printf(format, product.getID(), product.getName(), product.getCategory(), product.getDescription(), String.valueOf(product.getQuantity() == 0 ? "Out of Stock" : product.getQuantity()), String.valueOf(product.getPrice()) + " CA$", String.valueOf(product.getDiscount()));
         }
         System.out.println();
     }
