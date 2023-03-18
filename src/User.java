@@ -7,11 +7,6 @@ public class User {
     private String email;
     private String password;
     private String role;
-    private ArrayList cart;
-
-
-    // Will create a new user if no ID parameter
-
 
     public User(String ID, String name, String email, String password, String role) {
         this.ID = ID;
@@ -26,12 +21,6 @@ public class User {
         // remove space
         this(Utilities.generateUUID("user"), name, email, password, role);
     }
-
-
-
-
-
-
 
 
     // Connected to Authentication

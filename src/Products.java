@@ -136,6 +136,60 @@ public class Products {
         return product;
     }
 
+    /*
+        Update product with all the inputs
+     */
+    public static void updateProductWithInputs() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.printf("Enter the product ID: ");
+        String id = scanner.nextLine();
+
+        int index = Products.findProductByID(id);
+        if (index == -1) {
+            System.out.println("Product not found.");
+        } else {
+            Product product = Products.getProduct(index);
+            System.out.println(product);
+            System.out.printf("Enter the field to update (name, category, price, discount, description, quantity): ");
+            String field = scanner.nextLine();
+
+            if (!field.equals("category") && !field.equals("name") && !field.equals("price") && !field.equals("discount") && !field.equals("description") && !field.equals("quantity")) {
+                System.out.println("Invalid field. Got '" + field + "' but expected: category, name, price, discount.");
+                return;
+            }
+
+
+            if (field.equals("category")) {
+                System.out.print("Enter the new value: ");
+                String value = scanner.nextLine();
+                product.setCategory(value);
+            } else if (field.equals("name")) {
+                System.out.print("Enter the new value: ");
+                String value = scanner.nextLine();
+                product.setName(value);
+            } else if (field.equals("description")) {
+                System.out.print("Enter the new value: ");
+                String value = scanner.nextLine();
+                product.setDescription(value);
+            } else if (field.equals("price")) {
+                System.out.print("Enter the new value (double): ");
+                String value = scanner.nextLine();
+                product.setPrice(Double.parseDouble(value));
+            } else if (field.equals("quantity")) {
+                System.out.print("Enter the new value (int): ");
+                String value = scanner.nextLine();
+                product.setQuantity(Integer.parseInt(value));
+            }else {
+                System.out.print("Enter the new value (ex. 0.15 for 15%): ");
+                String value = scanner.nextLine();
+                product.setDiscount(Double.parseDouble(value));
+            }
+
+            Products.updateProduct(id, product);
+            System.out.println("Product updates successfully");
+            System.out.println(product);
+        }
+    }
     // Update a product by ID
     public static Product updateProduct(String ID, Product new_product) {
         ArrayList<Product> temp_products = products;
@@ -158,6 +212,20 @@ public class Products {
         return new_product;
     }
 
+    /*
+        Update a product quantity by id
+        Value is how many quantities user bought
+     */
+    public static boolean updateProductQuantity(String Id, int value) {
+        Product product = getProduct(Id);
+        if (product == null) {
+            System.out.println("Product not found");
+            return false;
+        }
+        product.setQuantity(product.getQuantity()+value);
+        updateProduct(Id, product);
+        return true;
+    }
     /*
         Remove a product by ID
      */
@@ -200,6 +268,18 @@ public class Products {
         }
     }
 
+    /*
+        Get product by id
+     */
+    public static Product getProduct(int index) {
+        return products.get(index);
+    }
+
+    public static Product getProduct(String id) {
+        int index = findProductByID(id);
+        if (index == -1) return null;
+        else return getProduct(index);
+    }
 
     /*
         Find a product by ID using TODO: BINARY SEARCH

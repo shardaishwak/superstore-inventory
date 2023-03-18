@@ -110,7 +110,7 @@ public class Main {
     public static boolean authController(Authentication auth) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter the option: ");
+        System.out.print("> ");
         String fullCommand = scanner.nextLine();
         String option = fullCommand.split(" ")[0];
 
@@ -140,7 +140,7 @@ public class Main {
     public static boolean adminController(Authentication auth) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter the option: ");
+        System.out.print("> ");
         String fullCommand = scanner.nextLine();
         String option = fullCommand.split(" ")[0];
 
@@ -174,6 +174,10 @@ public class Main {
                 Products.tabloidPrint();
                 break;
             }
+            case "update-product": {
+                Products.updateProductWithInputs();
+                break;
+            }
             case "search": {
                 String[] values = fullCommand.split(" ");
                 if (values.length < 3) {
@@ -196,7 +200,7 @@ public class Main {
     public static boolean shopperController(Authentication auth) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("Enter the option: ");
+        System.out.print("> ");
         String fullCommand = scanner.nextLine();
         String option = fullCommand.split(" ")[0];
 

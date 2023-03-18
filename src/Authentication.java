@@ -1,3 +1,4 @@
+
 /*
     user authentication system
 
@@ -92,7 +93,6 @@ public class Authentication {
 
         Users.updateUser(this.currentUser.getID(), this.currentUser);
     }
-
 
 
     public void logout() {
