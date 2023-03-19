@@ -162,7 +162,20 @@ public class Main {
                 break;
             }
             case "show-users": {
-                Users.tabloidPrint();
+                Users.tabloidPrint(auth.getCurrentUser().getID());
+                break;
+            }
+            case "delete-users": {
+                String[] IDs = Utilities.sliceArray(fullCommand.split(" "), 1);
+                for (String id : IDs) {
+                    if (id.equals(auth.getCurrentUser().getID())) {
+                        System.out.println("Error for "+ id + ": This is your account. Use delete-account to delete your personal account.");
+                    } else {
+                        if (Users.deleteUser(id)) System.out.println("User " + id + " deleted.");
+                        else System.out.println("Error deleting user " + id);
+                    }
+                }
+
                 break;
             }
             case "update-password": {

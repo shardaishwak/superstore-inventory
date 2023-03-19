@@ -189,10 +189,14 @@ public class Users {
      */
     public static void tabloidPrint() {
 
-        tabloidPrint(bubbleSort(users));
+        tabloidPrint(bubbleSort(users), null);
+    }
+    public static void tabloidPrint(String currentUserId) {
+
+        tabloidPrint(bubbleSort(users), currentUserId);
     }
 
-    public static void tabloidPrint(ArrayList<User> users) {
+    public static void tabloidPrint(ArrayList<User> users, String currentUserId) {
         if (users == null) {
             System.out.println("No user found.");
             return;
@@ -202,7 +206,10 @@ public class Users {
         int maxEmail = 0;
         int maxRole = 0;
         for (User user : users) {
-            if (user.getID().length() > maxID) maxID = user.getID().length();
+            int idLength = (user.getID() + (currentUserId != null && currentUserId.equals(user.getID()) ? " (you)" : "")).length();
+            if (idLength > maxID) {
+                maxID = idLength;
+            }
             if (user.getName().length() > maxName) maxName = user.getName().length();
             if (user.getEmail().length() > maxEmail) maxEmail = user.getEmail().length();
             if (user.getRole().length() > maxRole) maxRole = user.getRole().length();
@@ -213,7 +220,7 @@ public class Users {
         System.out.println();
         System.out.printf(format, "ID", "Name", "Email", "Role");
         for (User user : users) {
-            System.out.printf(format, user.getID(), user.getName(), user.getEmail(), user.getRole());
+            System.out.printf(format, (user.getID() + (currentUserId != null && currentUserId.equals(user.getID()) ? " (you)" : "")), user.getName(), user.getEmail(), user.getRole());
         }
         System.out.println();
     }
