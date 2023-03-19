@@ -74,6 +74,19 @@ public class Products {
     }
 
     /*
+      Get product by id
+   */
+    public static Product getProduct(int index) {
+        return products.get(index);
+    }
+
+    public static Product getProduct(String id) {
+        int index = findProductByID(id);
+        if (index == -1) return null;
+        else return getProduct(index);
+    }
+
+    /*
         Return the list of products in the cache
      */
     public static ArrayList<Product> getProducts() {
@@ -245,6 +258,7 @@ public class Products {
         return true;
     }
 
+
     /*
         Main search method for the client-side
      */
@@ -268,18 +282,6 @@ public class Products {
         }
     }
 
-    /*
-        Get product by id
-     */
-    public static Product getProduct(int index) {
-        return products.get(index);
-    }
-
-    public static Product getProduct(String id) {
-        int index = findProductByID(id);
-        if (index == -1) return null;
-        else return getProduct(index);
-    }
 
     /*
         Find a product by ID using TODO: BINARY SEARCH

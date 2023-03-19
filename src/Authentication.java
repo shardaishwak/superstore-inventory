@@ -103,8 +103,6 @@ public class Authentication {
         return this.currentUser != null;
     }
 
-
-
     // Inputs
     public String getEmailInput(Scanner scanner, boolean withValidation) {
         while(true) {

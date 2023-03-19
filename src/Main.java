@@ -77,12 +77,16 @@ public class Main {
                 {"show-users", "Show the list of all the users in database", ""},
                 {"update-password", "Update the current password", ""},
                 {"logout", "Logout from system", ""},
+                {"delete-users", "Delete one or more users", "delete-users [id] [id] ..."},
+                {"delete-account", "Delete your account", ""},
                 {"", "", ""},
                 {"create-product", "Create a new product in the database", ""},
                 {"update-product", "Update information about a particular product", ""},
                 {"show-products", "Show all products in the database", ""},
                 {"search", "Search for a particular product. For example 'search category cheese' or 'search price 23.99'.", "search [filter] [value]"},
                 {"", "Filter by category, name, id, price, discount", ""},
+                {"", "Price and discount filters return products with price equal or less than the given.", ""},
+                {"delete-products", "Delete a particular product by ID. One or more product id separated by space.", "delete-products [id] [id] ..."},
                 {"", "", ""},
                 {"exit", "Exit the system", ""}
         };
@@ -185,6 +189,15 @@ public class Main {
                     break;
                 }
                 Products.tabloidPrint(Products.search(values[1], Utilities.joinArray(values, 2)));
+                break;
+            }
+            case "delete-products": {
+                String[] IDs = Utilities.sliceArray(fullCommand.split(" "), 1);
+                for (String id : IDs) {
+                    if (Products.deleteProductById(id)) System.out.println("Product " + id + " deleted.");
+                    else System.out.println("Error deleting product " + id);
+                }
+
                 break;
             }
             case "exit": {

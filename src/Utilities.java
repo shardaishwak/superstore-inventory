@@ -50,4 +50,14 @@ public class Utilities {
         }
         return str;
     }
+
+    public static String[] sliceArray(String[] values, int from) {
+        String[] str = new String[values.length-from];
+        int j = 0;
+        for (int i = from; i < values.length; i++) {
+            str[j] = values[i];
+            j++;
+        }
+        return str;
+    }
 }
