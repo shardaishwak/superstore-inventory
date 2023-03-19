@@ -90,6 +90,26 @@ public class Product {
 
     public String toString() {
         // order matters: from DB
-        return this.ID+"~"+this.name+"~"+this.description+"~"+this.quantity+"~"+this.price+"~"+this.discount+"~"+this.category;
+        return toString("~");
+    }
+    // Stringify the product using custom delimiter
+    public String toString(String delimiter) {
+        return this.ID+delimiter+this.name+delimiter+this.description+delimiter+this.quantity+delimiter+this.price+delimiter+this.discount+delimiter+this.category;
+    }
+
+    // Parsing the products that were stringified before suing toString(delimiter) method
+    public static Product parse(String line, String delimiter) {
+        String data[] = line.split(delimiter);
+
+        // Getting the data from the line
+        String ID = data[0];
+        String name = data[1];
+        String description = data[2];
+        String quantity = data[3];
+        String price = data[4];
+        String discount = data[5];
+        String category = data[6];
+
+        return new Product(ID, name, description, Integer.valueOf(quantity), Double.valueOf(price), Double.valueOf(discount), category);
     }
 }

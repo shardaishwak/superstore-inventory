@@ -1,5 +1,6 @@
 import jdk.jshell.execution.Util;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
@@ -13,6 +14,13 @@ public class Main {
 
         // Load all the products from the DB
         Products.load();
+
+        // Load all orders from the DB
+        OrderHistories.load();
+
+
+
+
 
         // get auth state
 
@@ -56,7 +64,6 @@ public class Main {
             System.out.println();
         }
 
-
     }
 
     public static void printAuthOptions() {
@@ -88,6 +95,9 @@ public class Main {
                 {"", "Price and discount filters return products with price equal or less than the given.", ""},
                 {"delete-products", "Delete a particular product by ID. One or more product id separated by space.", "delete-products [id] [id] ..."},
                 {"", "", ""},
+                {"show-orders", "Show the list of all the orders", ""},
+                {"search-order", "search an order by ID", "search-order [id]"},
+                {"", "", ""},
                 {"exit", "Exit the system", ""}
         };
 
@@ -104,6 +114,8 @@ public class Main {
                 {"search", "Search for a particular product. For example 'search category cheese' or 'search price 23.99'.", "search [filter] [value]"},
                 {"", "Filter by category, name, id, price, discount", ""},
                 {"", "Price and discount filters return products with price equal or less than the given.", ""},
+                {"", "", ""},
+                {"show-orders", "Show the list of all the orders", ""},
                 {"", "", ""},
                 {"exit", "Exit the system", ""}
         };
@@ -178,6 +190,14 @@ public class Main {
 
                 break;
             }
+            case "delete-account": {
+                //logout
+                String id = auth.getCurrentUser().getID();
+                auth.logout();
+                Users.deleteUser(id);
+                //Users.deleteUser
+                break;
+            }
             case "update-password": {
                 auth.updatePassword();
                 break;
@@ -211,6 +231,21 @@ public class Main {
                     else System.out.println("Error deleting product " + id);
                 }
 
+                break;
+            }
+            case "show-orders": {
+                OrderHistories.tabloidPrint();
+                break;
+            }
+            case "search-order": {
+                OrderHistory order = OrderHistories.getOrder(fullCommand.split(" ")[1]);
+                if (order == null) {
+                    System.out.println("Order not found.");
+                } else {
+                    ArrayList<OrderHistory> orders = new ArrayList<>();
+                    orders.add(order);
+                    OrderHistories.tabloidPrint(orders);
+                }
                 break;
             }
             case "exit": {
@@ -250,6 +285,10 @@ public class Main {
                     break;
                 }
                 Products.tabloidPrint(Products.search(values[1], Utilities.joinArray(values, 2)));
+                break;
+            }
+            case "show-orders": {
+                OrderHistories.tabloidPrint(OrderHistories.findOrdersByUserId(auth.getCurrentUser().getID()));
                 break;
             }
             case "exit": {

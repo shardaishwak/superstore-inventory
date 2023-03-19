@@ -33,20 +33,7 @@ public class Products {
             while(fileScanner.hasNext()) {
                 // Getting the data line by line
                 String line = fileScanner.nextLine();
-                String data[] = line.split("~");
-
-                // Getting the data from the line
-                String ID = data[0];
-                String name = data[1];
-                String description = data[2];
-                String quantity = data[3];
-                String price = data[4];
-                String discount = data[5];
-                String category = data[6];
-
-
-                // Instatiating a new product and storing in the temporary array
-                tproducts.add(new Product(ID, name, description, Integer.valueOf(quantity), Double.valueOf(price), Double.valueOf(discount), category));
+                tproducts.add(Product.parse(line, "~"));
             }
             fileScanner.close();
 
@@ -455,7 +442,6 @@ public class Products {
         }
         System.out.println();
     }
-
 
 
 }
