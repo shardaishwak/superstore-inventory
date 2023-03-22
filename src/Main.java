@@ -16,7 +16,7 @@ public class Main {
         Products.load();
 
         // Load all orders from the DB
-        OrderHistories.load();
+        Orders.load();
 
 
 
@@ -116,6 +116,10 @@ public class Main {
                 {"", "Price and discount filters return products with price equal or less than the given.", ""},
                 {"", "", ""},
                 {"show-orders", "Show the list of all the orders", ""},
+                {"show-cart", "Show the user's shopping cart", ""},
+                {"add-product-to-cart", "Add a product to cart", ""},
+                {"remove-product-from-cart", "Remove a product to cart", ""},
+                {"checkout", "Checkout the current cart", ""},
                 {"", "", ""},
                 {"exit", "Exit the system", ""}
         };
@@ -234,17 +238,17 @@ public class Main {
                 break;
             }
             case "show-orders": {
-                OrderHistories.tabloidPrint();
+                Orders.tabloidPrint();
                 break;
             }
             case "search-order": {
-                OrderHistory order = OrderHistories.getOrder(fullCommand.split(" ")[1]);
+                Order order = Orders.getOrder(fullCommand.split(" ")[1]);
                 if (order == null) {
                     System.out.println("Order not found.");
                 } else {
-                    ArrayList<OrderHistory> orders = new ArrayList<>();
+                    ArrayList<Order> orders = new ArrayList<>();
                     orders.add(order);
-                    OrderHistories.tabloidPrint(orders);
+                    Orders.tabloidPrint(orders);
                 }
                 break;
             }
@@ -259,11 +263,14 @@ public class Main {
     }
 
     public static boolean shopperController(Authentication auth) {
+        ShoppingCart cart = new ShoppingCart(auth.getCurrentUser().getID());
         Scanner scanner = new Scanner(System.in);
 
         System.out.print("> ");
         String fullCommand = scanner.nextLine();
         String option = fullCommand.split(" ")[0];
+
+        // create a shopping cart class: initialize a new order or get the current cart
 
         switch(option) {
             case "options": {
@@ -288,7 +295,28 @@ public class Main {
                 break;
             }
             case "show-orders": {
-                OrderHistories.tabloidPrint(OrderHistories.findOrdersByUserId(auth.getCurrentUser().getID()));
+                ArrayList<Order> orders = Orders.findOrdersByUserId(auth.getCurrentUser().getID());
+                if (orders.size() == 0) System.out.println("No order found.");
+                else {
+                    Orders.tabloidPrint(orders);
+                }
+                break;
+
+            }
+            case "show-cart": {
+                cart.print();
+                break;
+            }
+            case "add-product-to-cart": {
+                cart.addProductToCartWithInputs();
+                break;
+            }
+            case "remove-product-from-cart": {
+                cart.removeProductFromCartWithInputs();
+                break;
+            }
+            case "checkout": {
+                cart.checkout();
                 break;
             }
             case "exit": {

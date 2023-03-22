@@ -1,37 +1,37 @@
 import java.util.ArrayList;
 
-public class OrderHistory {
+public class Order {
     // Order ID
     private String id;
     // Id of user who made the order
     private String userId;
-    // Total order price
-    private double totalPrice;
+
     // List of products in the order
     private ArrayList<Product> products;
     // Status of the order
-    private String status; // created, pending
+    private String status; // created, in-process
 
     /*
         Instantiate a newly created order
      */
-    public OrderHistory(String userId, ArrayList<Product> products) {
+    public Order(String userId, ArrayList<Product> products) {
         this.id = Utilities.generateUUID("order");
         this.userId = userId;
         this.products = products;
-        this.totalPrice = 0;
-        this.status = "created";
-        for (Product product : products) {
-            this.totalPrice+=product.getPrice();
-        }
+        this.status = "in-progress";
+    }
+    public Order(String userId) {
+        this.id = Utilities.generateUUID("order");
+        this.userId = userId;
+        this.products = new ArrayList<>();
+        this.status = "in-progress";
     }
     /*
         Instantiate an already created order from the Database, if necessary in any circumstance
      */
-    public OrderHistory(String id, String userId, double totalPrice, ArrayList<Product> products, String status) {
+    public Order(String id, String userId, ArrayList<Product> products, String status) {
         this.id = id;
         this.userId = userId;
-        this.totalPrice = totalPrice;
         this.products = products;
         this.status = status;
     }
@@ -56,12 +56,13 @@ public class OrderHistory {
     }
 
     public double getTotalPrice() {
-        return totalPrice;
+        int total = 0;
+        for (Product product : this.products) {
+            total+=product.getPrice()*product.getQuantity();
+        }
+        return total;
     }
 
-    public void setTotalPrice(double totalPrice) {
-        this.totalPrice = totalPrice;
-    }
 
     public ArrayList<Product> getProducts() {
         return products;
@@ -70,6 +71,31 @@ public class OrderHistory {
     public void setProducts(ArrayList<Product> products) {
         this.products = products;
     }
+
+    public Product getProduct(String id) {
+        int index = findProductById(id);
+        if (index == -1) return null;
+        return this.products.get(index);
+    }
+    public void appendProduct(Product product) {
+        this.products.add(product);
+    }
+
+    public void updateProduct(String id, Product product) {
+        int index = findProductById(id);
+        this.products.set(index, product);
+    }
+    public void removeProduct(int index) {
+        this.products.remove(index);
+    }
+    public int findProductById(String id) {
+        for (int i = 0; i < this.products.size(); i++) {
+            if (this.products.get(i).getID().equals(id)) return i;
+        }
+
+        return -1;
+    }
+
 
     public String getStatus() {
         return status;
@@ -80,12 +106,12 @@ public class OrderHistory {
     }
 
     public String toString() {
-        return this.id + "~" + this.userId + "~" + stringifyProducts(this.products) + "~" + this.totalPrice + "~" + this.status;
+        return this.id + "~" + this.userId + "~" + stringifyProducts(this.products) + "~" + this.status;
     }
     /*
         Related to toString which acts as the order stringifier
      */
-    public static OrderHistory parse(String line, String delimiter) {
+    public static Order parse(String line, String delimiter) {
         // Split using the delimiter
         String data[] = line.split(delimiter);
 
@@ -94,11 +120,10 @@ public class OrderHistory {
         String userId = data[1];
         // parser the products using the method below
         ArrayList<Product> products = parseProducts(data[2]);
-        String totalPrice = data[3];
-        String status = data[4];
+        String status = data[3];
 
         // returning a new order
-        return new OrderHistory(ID, userId, Double.parseDouble(totalPrice),products, status);
+        return new Order(ID, userId,products, status);
     }
 
 

@@ -1,5 +1,5 @@
 product-36062553~Onion~Simple onion~400~1.23~0.0~Onion
-product-42996507~Nutella~Miglior cioccolato al mondo, molto buono~150~9.65~0.0~Chocolate
+product-42996507~Nutella~Miglior cioccolato al mondo, molto buono~80~9.65~0.0~Chocolate
 product-49142250~Fontal formaggio~Formaggio con pasta frolla e tartufo~100~12.99~0.0~Italian cheese
 product-69961576~Onion~THis is some nce italian cheese~200~12.67~0.15~Italian
 product-7669338~Pasta~italian pasta with small refetics~300~23.44~0.0~Italian pasta
