@@ -150,11 +150,11 @@ public class Products {
         } else {
             Product product = Products.getProduct(index);
             System.out.println(product);
-            System.out.printf("Enter the field to update (name, category, price, discount, description, quantity): ");
+            System.out.println("Enter the field to update (name, category, price, discount, description, quantity): ");
             String field = scanner.nextLine();
 
             if (!field.equals("category") && !field.equals("name") && !field.equals("price") && !field.equals("discount") && !field.equals("description") && !field.equals("quantity")) {
-                System.out.println("Invalid field. Got '" + field + "' but expected: category, name, price, discount.");
+                System.out.println("Invalid field. Got " + field + " but expected: category, name, price, discount.");
                 return;
             }
 
@@ -186,7 +186,7 @@ public class Products {
             }
 
             Products.updateProduct(id, product);
-            System.out.println("Product updates successfully");
+            System.out.println("Product updated successfully");
             System.out.println(product);
         }
     }
@@ -264,7 +264,7 @@ public class Products {
         else if (filter.equals("price")) return findProductsByPrice(Double.parseDouble(value));
         else if (filter.equals("discount")) return findProductsByDiscount(Double.parseDouble(value));
         else {
-            System.out.println("Filter '" + filter +"' not found.");
+            System.out.println("Filter " + filter +" not found.");
             return null;
         }
     }
@@ -442,6 +442,5 @@ public class Products {
         }
         System.out.println();
     }
-
 
 }
