@@ -21,17 +21,24 @@ public class Utilities {
             if (option[2].length() > maxLengthFormat) maxLengthFormat = option[2].length();
         }
 
+        int totalLength = 3 + maxLengthAction+2+maxLengthCommand+2+maxLengthFormat+2;
+        String delimiter = getDelimiterByWidth(totalLength);
         String format = "|"+"%-"+(maxLengthCommand+2)+"s"+"|"+"%-"+(maxLengthAction+2)+"s"+"|"+"%-"+(maxLengthFormat+2)+"s\n";
 
-        System.out.printf(format, "Command", "Description", "Format");
+
         System.out.println();
+        System.out.printf(format, "Command", "Description", "Format");
+        System.out.println(delimiter);
         for (String[] option : options) {
             if (Utilities.joinArray(option).trim().equals("")) {
-                System.out.println();
-            } else if (option[0].equals("") && option[2].equals("")) {
+                System.out.println(delimiter);
+            }
+            else if (option[0].equals("") && option[2].equals("")) {
                 System.out.printf(" "+"%-"+(maxLengthCommand+2)+"s"+" "+"%-"+(maxLengthAction+2)+"s"+" "+"%-"+(maxLengthFormat+2)+"s\n", option[0], option[1], option[2]);
-            } else System.out.printf(format, option[0], option[1], option[2]);
+            }
+            else System.out.printf(format, option[0], option[1], option[2]);
         }
+        System.out.println(delimiter);
         System.out.println();
 
     }
@@ -58,6 +65,11 @@ public class Utilities {
             str[j] = values[i];
             j++;
         }
+        return str;
+    }
+    public static String getDelimiterByWidth(int width) {
+        String str = "";
+        for (int i = 0 ; i < width; i++) str+="-";
         return str;
     }
 }

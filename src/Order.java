@@ -56,7 +56,7 @@ public class Order {
     }
 
     public double getTotalPrice() {
-        int total = 0;
+        double total = 0;
         for (Product product : this.products) {
             total+=product.getPrice()*product.getQuantity();
         }

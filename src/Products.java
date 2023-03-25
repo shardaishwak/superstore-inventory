@@ -1,3 +1,5 @@
+import jdk.jshell.execution.Util;
+
 import java.io.File;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -51,7 +53,9 @@ public class Products {
         try {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
-            for (Product i : bubbleSort(products)) {
+            // Sort items when updating
+            products = bubbleSort(products);
+            for (Product i : products) {
                 writer.println(i);
             }
             writer.close();
@@ -93,9 +97,10 @@ public class Products {
         ArrayList<Product> temp_products = products;
         // Add the product
         temp_products.add(product);
+
         //products = binarySort(products);
         // Update the cache
-        products = temp_products;
+        products = bubbleSort(temp_products);
         // SYNC
         syncProducts();
 
@@ -370,10 +375,10 @@ public class Products {
             for (int j = 0; j < i; j++) {
                 int comparison;
                 if (sortBy.equals("name")) {
-                    comparison = products.get(j).getName().compareTo(products.get(j+1).getName());
+                    comparison = products.get(j).getName().toLowerCase().compareTo(products.get(j+1).getName().toLowerCase());
                 }
                 else if (sortBy.equals("category")) {
-                    comparison = products.get(j).getCategory().compareTo(products.get(j+1).getCategory());
+                    comparison = products.get(j).getCategory().toLowerCase().compareTo(products.get(j+1).getCategory().toLowerCase());
                 }
                 else if (sortBy.equals("price")) {
                     comparison = Double.compare(products.get(j).getPrice(), products.get(j+1).getPrice());
@@ -408,7 +413,7 @@ public class Products {
 
     // Print the tabloid format of the products
     public static void tabloidPrint() {
-        tabloidPrint(bubbleSort(products));
+        tabloidPrint(bubbleSort(products, "name", false));
     }
 
     public static void tabloidPrint(ArrayList<Product> products) {
@@ -433,13 +438,20 @@ public class Products {
             if (String.valueOf(product.getDiscount()).length() > maxDiscount) maxDiscount = String.valueOf(product.getDiscount()).length();
         }
 
+        int totalWidth = maxID+2+maxName+2+maxCategory+2+maxDescription+2+maxQuantity+2+maxPrice+5+maxDiscount+7;
+        String delimiter = Utilities.getDelimiterByWidth(totalWidth);
+        System.out.println();
 
         String format = "|"+"%-"+(maxID+2)+"s"+"|"+"%-"+(maxName+2)+"s"+"|"+"%-"+(maxCategory+2)+"s"+"|"+"%-"+(maxDescription+2)+"s"+"|"+"%-"+(maxQuantity+2)+"s"+"|"+"%-"+(maxPrice+5)+"s"+"|"+"%-"+(maxDiscount+2)+"s\n";
-        System.out.println();
+
         System.out.printf(format, "ID", "Name", "Category","Description", "Qty. ", "Price", "Discount");
+        System.out.println(delimiter);
         for (Product product : products) {
-            System.out.printf(format, product.getID(), product.getName(), product.getCategory(), product.getDescription(), String.valueOf(product.getQuantity() == 0 ? "Out of Stock" : product.getQuantity()), String.valueOf(product.getPrice()) + " CA$", String.valueOf(product.getDiscount()));
+            System.out.printf(format, product.getID(), product.getName(), product.getCategory(), product.getDescription(), String.valueOf(product.getQuantity() == 0 ? "Out of Stock" : product.getQuantity()), String.format("%.2f", product.getPrice()) + " CA$", String.valueOf(product.getDiscount()));
         }
+        if (products.size() == 0) System.out.println("No products.");
+
+        System.out.println(delimiter);
         System.out.println();
     }
 

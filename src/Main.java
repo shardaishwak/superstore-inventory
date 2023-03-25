@@ -21,7 +21,6 @@ public class Main {
 
 
 
-
         // get auth state
 
         String controller = ""; // the controller shows different actions that we can perform
@@ -115,6 +114,7 @@ public class Main {
                 {"", "Filter by category, name, id, price, discount", ""},
                 {"", "Price and discount filters return products with price equal or less than the given.", ""},
                 {"", "", ""},
+                {"show-all-products", "Show all products in the database", ""},
                 {"show-orders", "Show the list of all the orders", ""},
                 {"show-cart", "Show the user's shopping cart", ""},
                 {"add-product-to-cart", "Add a product to cart", ""},
@@ -317,6 +317,10 @@ public class Main {
             }
             case "checkout": {
                 cart.checkout();
+                break;
+            }
+            case "show-all-products": {
+                Products.tabloidPrint();
                 break;
             }
             case "exit": {

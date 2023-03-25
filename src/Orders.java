@@ -224,7 +224,7 @@ public class Orders {
         for (Order order : orders) {
             System.out.println("OrderID: " + order.getId());
             System.out.println("User ID: " + order.getUserId());
-            System.out.println("Total cost: " + order.getTotalPrice() + "CA$");
+            System.out.println("Total cost: " + String.format("%.2f",order.getTotalPrice()) + "CA$");
             System.out.println("Order status: " + order.getStatus());
             System.out.println("Products: ");
             Products.tabloidPrint(order.getProducts());
