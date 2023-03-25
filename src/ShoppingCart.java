@@ -46,8 +46,41 @@ public class ShoppingCart {
     }
 
     public void checkout() {
+        Order cart = getCart();
+        if (cart.getProducts().size() == 0) {
+            System.out.println("Nothing to checkout. Cart is empty.");
+            return;
+        }
+        System.out.println();
+        System.out.println("Here is the summary");
+        Products.tabloidPrint(cart.getProducts());
+
+        System.out.println("Total cost: " + cart.getTotalPrice() + "CA$");
+
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Would you like to proceed with the checkout (y/n)? ");
+        String option = scanner.nextLine();
+        if (!option.equals("y")&& !option.equals("yes")) {
+            System.out.println("Checkout cancelled. All the products are in the cart. No debit.");
+            return;
+        }
+
+
+        // Initialize the credit card class
+        Checkout checkout = new Checkout();
+        checkout.CheckoutDisplay();
+
+
+        System.out.println("Processing...");
+        System.out.println("Processing...success.");
+
+
+
+
         Orders.updateStatusToComplete(this.orderId);
         System.out.println("Checkout completed.");
+        System.out.println("===============================");
+        System.out.println("Thank you for shopping with us.");
     }
 
     public void print() {

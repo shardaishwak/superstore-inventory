@@ -6,9 +6,9 @@ public class Checkout {
     private long PHnum;
     private long Cnum;
 
-    public void CheackoutDisplay() {
+    public void CheckoutDisplay() {
         Scanner s = new Scanner(System.in);
-        System.out.println("Enter the name: ");
+        System.out.println("Enter the name for the order: ");
         name = s.nextLine();
         System.out.println("Enter the billing Address: ");
         address = s.nextLine();
@@ -71,19 +71,21 @@ public class Checkout {
 
 
 //check if a card is valid: if the sum of odd places + 2 sum of even places is a multiple of 10 = valid
-    public static boolean CardIsValid(long Cnum) {
+    public boolean CardIsValid(long Cnum) {
         // check if the prefix is valid
 
-        int evenSum = CreditCardValidator.sumOfDoubleEvenPlaces(Cnum);
-        int oddSum = CreditCardValidator.sumOfOddPlaces(Cnum);
+        CreditCardValidator validator = new CreditCardValidator();
+
+        int evenSum = validator.sumOfDoubleEvenPlaces(Cnum);
+        int oddSum = validator.sumOfOddPlaces(Cnum);
 
         boolean areDigitsValid = (evenSum + oddSum) % 10 == 0;
 
         boolean isPrefixMatch = (
-                CreditCardValidator.prefixMatch(Cnum, 4) ||
-                CreditCardValidator.prefixMatch(Cnum, 5) ||
-                CreditCardValidator.prefixMatch(Cnum, 35) ||
-                CreditCardValidator.prefixMatch(Cnum, 6));
+                validator.prefixMatch(Cnum, 4) ||
+                        validator.prefixMatch(Cnum, 5) ||
+                        validator.prefixMatch(Cnum, 35) ||
+                        validator.prefixMatch(Cnum, 6));
 
         return areDigitsValid && isPrefixMatch;
     }

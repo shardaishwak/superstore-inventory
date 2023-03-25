@@ -1,7 +1,7 @@
 public class CreditCardValidator {
 
     // Get the number of digits in the card
-    public static int getSize(long number) {
+    public int getSize(long number) {
         int digits = 0;
         while(number > 0) {
             number /= 10;
@@ -12,7 +12,7 @@ public class CreditCardValidator {
     }
 
     // Get the first k digits for the card
-    public static long getPrefix(long number, int k) {
+    public long getPrefix(long number, int k) {
         int totalDigits = getSize(number);
         if (k >= totalDigits) return number;
 
@@ -24,7 +24,7 @@ public class CreditCardValidator {
     }
 
     // Check if number d is prefix of the card
-    public static boolean prefixMatch(long number, int d) {
+    public boolean prefixMatch(long number, int d) {
         int prefix_match_digits = getSize(d);
         long prefix = getPrefix(number, prefix_match_digits);
 
@@ -32,7 +32,7 @@ public class CreditCardValidator {
     }
 
     // Return 1 digit or return sum of all digits if number has more than 1 digit
-    public static int getDigit(int number) {
+    public int getDigit(int number) {
         if (number < 10) return number;
 
         int sum = 0;
@@ -45,7 +45,7 @@ public class CreditCardValidator {
     }
 
     // Return the sum of even places beginning from right. All doubled
-    public static int sumOfDoubleEvenPlaces(long number) {
+    public int sumOfDoubleEvenPlaces(long number) {
         int track = 0;
 
         int sum = 0;
@@ -63,7 +63,7 @@ public class CreditCardValidator {
     }
 
     // Return the sum of odd places starting from right
-    public static int sumOfOddPlaces(long number) {
+    public int sumOfOddPlaces(long number) {
         int track = 0;
 
         int sum = 0;
