@@ -40,7 +40,7 @@ public class Users {
         } catch(Exception err) {
             System.out.println(err.getMessage());
         }
-        users = temp_users;
+        users = bubbleSort(temp_users);
     }
 
     /*
@@ -50,6 +50,7 @@ public class Users {
         try {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
+            users = bubbleSort(users);
             for (User i : bubbleSort(users)) {
                 writer.println(i.toStringWithPassword());
             }

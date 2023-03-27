@@ -32,7 +32,7 @@ public class Orders {
             System.out.println(err.getMessage());
         }
         // Update the cache.
-        orders = temp_orders;
+        orders = bubbleSort(temp_orders);
     }
 
     /**
@@ -141,6 +141,7 @@ public class Orders {
             // Update the file with sorting
             PrintWriter writer = new PrintWriter(path);
             // will not sort it.
+            orders = bubbleSort(orders);
             for (Order i : (orders)) {
                 writer.println(i);
             }

@@ -43,7 +43,7 @@ public class Products {
             System.out.println(err.getMessage());
         }
         // Update the cache.
-        products = tproducts;
+        products = bubbleSort(tproducts);
     }
 
     /*
@@ -264,10 +264,10 @@ public class Products {
                 return temp;
             }
         }
-        else if (filter.equals("name")) return findProductsByName(value);
-        else if (filter.equals("category")) return findProductsByCategory(value);
-        else if (filter.equals("price")) return findProductsByPrice(Double.parseDouble(value));
-        else if (filter.equals("discount")) return findProductsByDiscount(Double.parseDouble(value));
+        else if (filter.equals("name")) return bubbleSort(findProductsByName(value), "name", false);
+        else if (filter.equals("category")) return bubbleSort(findProductsByCategory(value), "category", false);
+        else if (filter.equals("price")) return bubbleSort(findProductsByPrice(Double.parseDouble(value)), "price", false);
+        else if (filter.equals("discount")) return bubbleSort(findProductsByDiscount(Double.parseDouble(value)), "discount", false);
         else {
             System.out.println("Filter " + filter +" not found.");
             return null;

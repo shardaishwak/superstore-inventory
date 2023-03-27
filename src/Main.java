@@ -20,7 +20,6 @@ public class Main {
 
 
 
-
         // get auth state
 
         String controller = ""; // the controller shows different actions that we can perform
