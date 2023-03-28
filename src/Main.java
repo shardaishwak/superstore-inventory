@@ -113,11 +113,11 @@ public class Main {
                 {"", "Filter by category, name, id, price, discount", ""},
                 {"", "Price and discount filters return products with price equal or less than the given.", ""},
                 {"", "", ""},
-                {"show-all-products", "Show all products in the database", ""},
+                {"show-products", "Show all products in the database", ""},
                 {"show-orders", "Show the list of all the orders", ""},
                 {"show-cart", "Show the user's shopping cart", ""},
-                {"add-product-to-cart", "Add a product to cart", ""},
-                {"remove-product-from-cart", "Remove a product to cart", ""},
+                {"add-to-cart", "Add a product to cart", ""},
+                {"remove-from-cart", "Remove a product to cart", ""},
                 {"checkout", "Checkout the current cart", ""},
                 {"", "", ""},
                 {"exit", "Exit the system", ""}
@@ -306,11 +306,11 @@ public class Main {
                 cart.print();
                 break;
             }
-            case "add-product-to-cart": {
+            case "add-to-cart": {
                 cart.addProductToCartWithInputs();
                 break;
             }
-            case "remove-product-from-cart": {
+            case "remove-from-cart": {
                 cart.removeProductFromCartWithInputs();
                 break;
             }
@@ -318,7 +318,7 @@ public class Main {
                 cart.checkout();
                 break;
             }
-            case "show-all-products": {
+            case "show-products": {
                 Products.tabloidPrint();
                 break;
             }

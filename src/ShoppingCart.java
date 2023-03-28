@@ -55,7 +55,7 @@ public class ShoppingCart {
         System.out.println("Here is the summary");
         Products.tabloidPrint(cart.getProducts());
 
-        System.out.println("Total cost: " + cart.getTotalPrice() + "CA$");
+        System.out.println("Total cost: " + String.format("%.2f", cart.getTotalPrice()) + " CA$");
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Would you like to proceed with the checkout (y/n)? ");
@@ -90,7 +90,7 @@ public class ShoppingCart {
         System.out.println("Products: ");
         Products.tabloidPrint(cart.getProducts());
 
-        System.out.println("Total cost: " + cart.getTotalPrice() + "CA$");
+        System.out.println("Total cost: " + String.format("%.2f", cart.getTotalPrice()) + " CA$");
     }
 }
 

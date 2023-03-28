@@ -199,7 +199,8 @@ public class Orders {
     /**
         Sort orders by ID
      */
-    public static ArrayList<Order> bubbleSort(ArrayList<Order> orders) {
+    public static ArrayList<Order> bubbleSort(ArrayList<Order> tempOrder) {
+        ArrayList<Order> orders = (ArrayList<Order>) tempOrder.clone();
         for (int i = orders.size() - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
                 if (orders.get(j).getId().compareTo(orders.get(j+1).getId()) > 0) {
@@ -210,7 +211,6 @@ public class Orders {
             }
         }
         return orders;
-
     }
 
     /**
@@ -225,7 +225,7 @@ public class Orders {
         for (Order order : orders) {
             System.out.println("OrderID: " + order.getId());
             System.out.println("User ID: " + order.getUserId());
-            System.out.println("Total cost: " + String.format("%.2f",order.getTotalPrice()) + "CA$");
+            System.out.println("Total cost: " + String.format("%.2f",order.getTotalPrice()) + " CA$");
             System.out.println("Order status: " + order.getStatus());
             System.out.println("Products: ");
             Products.tabloidPrint(order.getProducts());

@@ -157,7 +157,8 @@ public class Users {
             - Email
             - Id
      */
-    public static ArrayList<User> bubbleSort(ArrayList<User> users, String sortBy, boolean descending) {
+    public static ArrayList<User> bubbleSort(ArrayList<User> temp_users, String sortBy, boolean descending) {
+        ArrayList<User> users = (ArrayList<User>) temp_users.clone();
         for (int i = users.size() - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
                 int comparison;

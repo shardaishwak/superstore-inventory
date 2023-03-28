@@ -98,9 +98,7 @@ public class Products {
         // Add the product
         temp_products.add(product);
 
-        //products = binarySort(products);
         // Update the cache
-        products = bubbleSort(temp_products);
         // SYNC
         syncProducts();
 
@@ -371,45 +369,45 @@ public class Products {
             - Discount
      */
     public static ArrayList<Product> bubbleSort(ArrayList<Product> products, String sortBy, boolean descending) {
-        for (int i = products.size() - 1; i >= 0; i--) {
+        // We found out that java does mutate the data object as well, which had negative consequences on the app as
+        // the data is no more synced with bubble sorting by ID, which resulted in products not being found
+        // as we use binary search
+        ArrayList<Product> temp_products = (ArrayList<Product>) products.clone();
+        for (int i = temp_products.size() - 1; i >= 0; i--) {
             for (int j = 0; j < i; j++) {
                 int comparison;
                 if (sortBy.equals("name")) {
-                    comparison = products.get(j).getName().toLowerCase().compareTo(products.get(j+1).getName().toLowerCase());
+                    comparison = temp_products.get(j).getName().toLowerCase().compareTo(temp_products.get(j+1).getName().toLowerCase());
                 }
                 else if (sortBy.equals("category")) {
-                    comparison = products.get(j).getCategory().toLowerCase().compareTo(products.get(j+1).getCategory().toLowerCase());
+                    comparison = temp_products.get(j).getCategory().toLowerCase().compareTo(temp_products.get(j+1).getCategory().toLowerCase());
                 }
                 else if (sortBy.equals("price")) {
-                    comparison = Double.compare(products.get(j).getPrice(), products.get(j+1).getPrice());
+                    comparison = Double.compare(temp_products.get(j).getPrice(), temp_products.get(j+1).getPrice());
                 }
                 else if (sortBy.equals("discount")) {
-                    comparison = Double.compare(products.get(j).getDiscount(), products.get(j+1).getDiscount());
+                    comparison = Double.compare(temp_products.get(j).getDiscount(), temp_products.get(j+1).getDiscount());
                 }
                 else if (sortBy.equals("quantity")) {
-                    comparison = products.get(j).getQuantity() - products.get(j+1).getQuantity();
+                    comparison = temp_products.get(j).getQuantity() - temp_products.get(j+1).getQuantity();
                 }
                 else {
-                    comparison = products.get(j).getID().compareTo(products.get(j+1).getID());
+                    comparison = temp_products.get(j).getID().compareTo(temp_products.get(j+1).getID());
                 }
 
                 if (descending ? comparison < 0 : comparison > 0) {
-                    Product temp = products.get(j);
-                    products.set(j, products.get(j+1));
-                    products.set(j+1, temp);
+                    Product t = temp_products.get(j);
+                    temp_products.set(j, temp_products.get(j+1));
+                    temp_products.set(j+1, t);
                 }
             }
         }
-        return products;
+        return temp_products;
     }
 
     public static ArrayList<Product> bubbleSort(ArrayList<Product> products) {
         return bubbleSort(products, "id", false);
     }
-
-
-
-
 
     // Print the tabloid format of the products
     public static void tabloidPrint() {
