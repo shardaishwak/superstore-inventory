@@ -15,13 +15,13 @@ public class Order {
         Instantiate a newly created order
      */
     public Order(String userId, ArrayList<Product> products) {
-        this.id = Utilities.generateUUID("order");
+        this.id = Utilities.generateUUID();
         this.userId = userId;
         this.products = products;
         this.status = "in-progress";
     }
     public Order(String userId) {
-        this.id = Utilities.generateUUID("order");
+        this.id = Utilities.generateUUID();
         this.userId = userId;
         this.products = new ArrayList<>();
         this.status = "in-progress";

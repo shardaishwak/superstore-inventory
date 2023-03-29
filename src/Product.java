@@ -28,7 +28,7 @@ public class Product {
     }
 
     public Product(String name, String description, int quantity, double price, String category) {
-        this(Utilities.generateUUID("product"), name, description, quantity, price, category);
+        this(Utilities.generateUUID(), name, description, quantity, price, category);
     }
 
 

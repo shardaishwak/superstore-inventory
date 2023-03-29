@@ -1,6 +1,5 @@
-product-36062553~Onion~Simple onion~259~1.23~0.0~Onion
-product-42996507~Nutella~Miglior cioccolato al mondo, molto buono~27~9.65~0.0~Chocolate
-product-49142250~Fontal formaggio~Formaggio con pasta frolla e tartufo~91~12.99~0.0~Italian cheese
-product-85089922~abc~fsd~2~45.55~0.0~fds
-product-90537408~Ferrero Roacher~Italian chocolate with nuts inside~391~2.0~0.0~Chocolate
-product-99733863~pasta~focaccia~43~23.0~0.0~banana
+36062553~Onion~Simple onion~239~1.23~0.0~Onion
+42996507~Nutella~Miglior cioccolato al mondo, molto buono~24~9.65~0.0~Chocolate
+49142250~Fontal formaggio~Formaggio con pasta frolla e tartufo~91~12.99~0.0~Italian cheese
+90537408~Ferrero Roacher~Italian chocolate with nuts inside~381~2.0~0.0~Chocolate
+99733863~pasta~focaccia~43~23.0~0.0~banana

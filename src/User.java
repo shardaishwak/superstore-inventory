@@ -19,7 +19,7 @@ public class User {
 
     public User(String name, String email, String password, String role) {
         // remove space
-        this(Utilities.generateUUID("user"), name, email, password, role);
+        this(Utilities.generateUUID(), name, email, password, role);
     }
 
 
