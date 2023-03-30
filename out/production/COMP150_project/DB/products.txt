@@ -1,5 +1,5 @@
 36062553~Onion~Simple onion~259~1.23~0.0~Onion
-42996507~Nutella~Miglior cioccolato al mondo, molto buono~24~9.65~0.0~Chocolate
+42996507~Nutella~Miglior cioccolato al mondo, molto buono~33~9.65~0.0~Chocolate
 49142250~Fontal formaggio~Formaggio con pasta frolla e tartufo~91~12.99~0.0~Italian cheese
-90537408~Ferrero Roacher~Italian chocolate with nuts inside~381~2.0~0.0~Chocolate
-99733863~pasta~focaccia~43~23.0~0.0~banana
+90537408~Ferrero Roacher~Italian chocolate with nuts inside~390~2.0~0.0~Chocolate
+98597640~Iphone 14 pro max~Latest high end modle of Iphone 14 series~106~1399.0~0.0~Electronics

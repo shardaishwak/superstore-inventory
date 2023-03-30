@@ -92,6 +92,7 @@ public class Authentication {
         // update the list
 
         Users.updateUser(this.currentUser.getID(), this.currentUser);
+        System.out.println("Password Updated!");
     }
 
 

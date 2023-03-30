@@ -57,6 +57,8 @@ public class ShoppingCart {
 
         System.out.println("Total cost: " + String.format("%.2f", cart.getTotalPrice()) + " CA$");
 
+        PrintPromotions();
+
         Scanner scanner = new Scanner(System.in);
         System.out.print("Would you like to proceed with the checkout (y/n)? ");
         String option = scanner.nextLine();
@@ -92,5 +94,77 @@ public class ShoppingCart {
 
         System.out.println("Total cost: " + String.format("%.2f", cart.getTotalPrice()) + " CA$");
     }
-}
+
+    public void PrintPromotions(){
+        Order cart = getCart();
+        String[][] promotions = {
+                {"GET25", "Get 25% off on orders above $300  ", ""},
+                {"SEASON50", "Get 50% off on orders above $5000(limited season offer)", ""},
+                {"HELLO100", "Get $100 off on orders above $1000",""},
+                {"GOOD20","Get $20 off on orders above 100",""},
+                {"none","",""}
+        };
+        Utilities.printOptions(promotions);
+
+        Double totalamt=cart.getTotalPrice();
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.print("> ");
+        String fullCommand = scanner.nextLine();
+        String promotion = fullCommand.split(" ")[0];
+
+
+            switch(promotion){
+                case "GET25" : {
+                    if (totalamt > 300) {
+                        totalamt = totalamt - (totalamt * 0.25);
+                    } else {
+                        System.out.println("You need a total amount of more than $300 to apply this promotion!");
+                    }
+                    break;
+                }
+
+                case "SEASON50":{
+                    if (totalamt > 5000) {
+                        totalamt = totalamt - (totalamt * 0.5);
+                    } else {
+                        System.out.println("You need a total amount of more than $5000 to apply this promotion!");
+                    }
+                    break;
+                }
+
+                case "HELLO100":{
+                    if (totalamt > 1000) {
+                        totalamt = totalamt - 100;
+                    }
+                    else {
+                        System.out.println("You need a total amount of more than $1000 to apply this promotion!");
+                    }
+                    break;
+                }
+
+                case "GOOD20":{
+                    if (totalamt > 100) {
+                        totalamt = totalamt - 20;
+                    }
+                    else {
+                        System.out.println("You need a total amount of more than $100 to apply this promotion!");
+                    }
+                    break;
+                }
+
+                case "none":{
+                    break;
+                }
+            }
+
+
+        System.out.println("Total cost: " + String.format("%.2f", totalamt) + " CA$");
+
+
+        }
+
+    }
+
+
 

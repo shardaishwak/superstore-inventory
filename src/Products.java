@@ -118,7 +118,7 @@ public class Products {
         System.out.print("Description: ");
         String description = scanner.nextLine();
 
-        System.out.print("Category");
+        System.out.print("Category: ");
         String category = scanner.nextLine();
 
         System.out.print("Quantity: ");
