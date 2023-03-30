@@ -90,38 +90,6 @@ public class Checkout {
         return areDigitsValid && isPrefixMatch;
     }
 
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public long getPHnum() {
-        return PHnum;
-    }
-
-    public void setPHnum(long PHnum) {
-        this.PHnum = PHnum;
-    }
-
-    public long getCnum() {
-        return Cnum;
-    }
-
-    public void setCnum(long cnum) {
-        Cnum = cnum;
-    }
 }
 
 

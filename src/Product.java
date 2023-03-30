@@ -52,10 +52,6 @@ public class Product {
         return ID;
     }
 
-    public void setID(String ID) {
-        this.ID = ID;
-    }
-
     public int getQuantity() {
         return quantity;
     }
