@@ -241,7 +241,12 @@ public class Main {
                 break;
             }
             case "search-order": {
-                Order order = Orders.getOrder(fullCommand.split(" ")[1]);
+                String[] spl = fullCommand.split(" ");
+                if (spl.length != 2) {
+                    System.out.println("Invalid argument. Required 1 but got " + (spl.length - 1));
+                    break;
+                }
+                Order order = Orders.getOrder(spl[1]);
                 if (order == null) {
                     System.out.println("Order not found.");
                 } else {

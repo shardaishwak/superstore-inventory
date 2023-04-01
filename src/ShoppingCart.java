@@ -57,7 +57,8 @@ public class ShoppingCart {
 
         System.out.println("Total cost: " + String.format("%.2f", cart.getTotalPrice()) + " CA$");
 
-        PrintPromotions();
+        double totalAfterPromotion = promotionApplication();
+        cart.setPromotionDiscount(totalAfterPromotion);
 
         Scanner scanner = new Scanner(System.in);
         System.out.print("Would you like to proceed with the checkout (y/n)? ");
@@ -95,7 +96,7 @@ public class ShoppingCart {
         System.out.println("Total cost: " + String.format("%.2f", cart.getTotalPrice()) + " CA$");
     }
 
-    public void PrintPromotions(){
+    public double promotionApplication(){
         Order cart = getCart();
         String[][] promotions = {
                 {"GET25", "Get 25% off on orders above $300  ", ""},
@@ -106,62 +107,74 @@ public class ShoppingCart {
         };
         Utilities.printOptions(promotions);
 
-        Double totalamt=cart.getTotalPrice();
+        Double totalAmount =cart.getTotalPrice();
         Scanner scanner = new Scanner(System.in);
 
-        System.out.print("> ");
+        System.out.print("Enter the promotion code: ");
         String fullCommand = scanner.nextLine();
         String promotion = fullCommand.split(" ")[0];
 
+        double promotionalDiscountPercentage = 0;
+        double promotionalDiscountAmount = 0;
 
-            switch(promotion){
-                case "GET25" : {
-                    if (totalamt > 300) {
-                        totalamt = totalamt - (totalamt * 0.25);
-                    } else {
-                        System.out.println("You need a total amount of more than $300 to apply this promotion!");
-                    }
-                    break;
-                }
 
-                case "SEASON50":{
-                    if (totalamt > 5000) {
-                        totalamt = totalamt - (totalamt * 0.5);
-                    } else {
-                        System.out.println("You need a total amount of more than $5000 to apply this promotion!");
-                    }
-                    break;
+        switch(promotion){
+            case "GET25" : {
+                if (totalAmount > 300) {
+                    totalAmount = totalAmount - (totalAmount * 0.25);
+                    promotionalDiscountPercentage = 0.25;
+                } else {
+                    System.out.println("You need a total amount of more than $300 to apply this promotion!");
                 }
-
-                case "HELLO100":{
-                    if (totalamt > 1000) {
-                        totalamt = totalamt - 100;
-                    }
-                    else {
-                        System.out.println("You need a total amount of more than $1000 to apply this promotion!");
-                    }
-                    break;
-                }
-
-                case "GOOD20":{
-                    if (totalamt > 100) {
-                        totalamt = totalamt - 20;
-                    }
-                    else {
-                        System.out.println("You need a total amount of more than $100 to apply this promotion!");
-                    }
-                    break;
-                }
-
-                case "none":{
-                    break;
-                }
+                break;
             }
 
+            case "SEASON50":{
+                if (totalAmount > 5000) {
+                    totalAmount = totalAmount - (totalAmount * 0.5);
+                    promotionalDiscountPercentage = 0.5;
+                } else {
+                    System.out.println("You need a total amount of more than $5000 to apply this promotion!");
+                }
+                break;
+            }
 
-        System.out.println("Total cost: " + String.format("%.2f", totalamt) + " CA$");
+            case "HELLO100":{
+                if (totalAmount > 1000) {
+                    totalAmount = totalAmount - 100;
+                    promotionalDiscountAmount = 100;
+                }
+                else {
+                    System.out.println("You need a total amount of more than $1000 to apply this promotion!");
+                }
+                break;
+            }
+
+            case "GOOD20":{
+                if (totalAmount > 100) {
+                    totalAmount = totalAmount - 20;
+                    promotionalDiscountAmount = 20;
+                }
+                else {
+                    System.out.println("You need a total amount of more than $100 to apply this promotion!");
+                }
+                break;
+            }
+
+            case "none":{
+                break;
+            }
+        }
+        double overallAmount = cart.getTotalPrice()*promotionalDiscountPercentage + promotionalDiscountAmount;
 
 
+
+        System.out.println("Overall promotional discount percentage: " + (promotionalDiscountPercentage*100) + "%");
+        System.out.println("Overall promotional discount amount: " + (promotionalDiscountAmount) + " CA$");
+        System.out.println("You saved: " + overallAmount + " CA$");
+        System.out.println("Final cost after promotions: " + String.format("%.2f", totalAmount) + " CA$");
+
+        return overallAmount;
         }
 
     }

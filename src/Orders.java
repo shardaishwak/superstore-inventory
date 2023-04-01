@@ -217,7 +217,7 @@ public class Orders {
         Print tabloid format of the orders
      */
     public static void tabloidPrint(ArrayList<Order> orders) {
-        if (orders == null) {
+        if (orders == null || orders.size() == 0) {
             System.out.println("No order found.");
             return;
         }
@@ -225,7 +225,9 @@ public class Orders {
         for (Order order : orders) {
             System.out.println("OrderID: " + order.getId());
             System.out.println("User ID: " + order.getUserId());
-            System.out.println("Total cost: " + String.format("%.2f",order.getTotalPrice()) + " CA$");
+            System.out.println("Total price: " + String.format("%.2f",order.getTotalPrice()) + " CA$");
+            System.out.println("Promotion: " + String.format("%.2f",order.getPromotionDiscount()) + " CA$");
+            System.out.println("Total cost after promotion (paid): " + String.format("%.2f",order.getTotalPrice() - order.getPromotionDiscount()) + " CA$");
             System.out.println("Order status: " + order.getStatus());
             System.out.println("Products: ");
             Products.tabloidPrint(order.getProducts());

@@ -10,6 +10,7 @@ public class Order {
     private ArrayList<Product> products;
     // Status of the order
     private String status; // created, in-process
+    private double promotionDiscount;
 
     /*
         Instantiate a newly created order
@@ -19,21 +20,24 @@ public class Order {
         this.userId = userId;
         this.products = products;
         this.status = "in-progress";
+        this.promotionDiscount = 0;
     }
     public Order(String userId) {
         this.id = Utilities.generateUUID();
         this.userId = userId;
         this.products = new ArrayList<>();
         this.status = "in-progress";
+        this.promotionDiscount = 0;
     }
     /*
         Instantiate an already created order from the Database, if necessary in any circumstance
      */
-    public Order(String id, String userId, ArrayList<Product> products, String status) {
+    public Order(String id, String userId, ArrayList<Product> products, String status, double promotionDiscount) {
         this.id = id;
         this.userId = userId;
         this.products = products;
         this.status = status;
+        this.promotionDiscount = promotionDiscount;
     }
 
     /*
@@ -105,8 +109,11 @@ public class Order {
         this.status = status;
     }
 
+    public double getPromotionDiscount() {return this.promotionDiscount;}
+    public void setPromotionDiscount(double value) {this.promotionDiscount = value;}
+
     public String toString() {
-        return this.id + "~" + this.userId + "~" + stringifyProducts(this.products) + "~" + this.status;
+        return this.id + "~" + this.userId + "~" + stringifyProducts(this.products) + "~" + this.status + "~" + this.promotionDiscount;
     }
     /*
         Related to toString which acts as the order stringifier
@@ -121,9 +128,10 @@ public class Order {
         // parser the products using the method below
         ArrayList<Product> products = parseProducts(data[2]);
         String status = data[3];
+        String promotionalDiscount = data[4];
 
         // returning a new order
-        return new Order(ID, userId,products, status);
+        return new Order(ID, userId,products, status, Double.parseDouble(promotionalDiscount));
     }
 
 
@@ -149,7 +157,9 @@ public class Order {
     public static ArrayList<Product> parseProducts(String elements) {
         // this delimiter divides one product from another
         // Split the string represeting each product
+        if (elements.length() == 0) return new ArrayList<>();
         String[] prodString = elements.split("--");
+
         ArrayList<Product> products = new ArrayList<>();
         // Iterate
         for (String prod : prodString) {
