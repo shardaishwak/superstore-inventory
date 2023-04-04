@@ -9,7 +9,7 @@ public class Order {
     // List of products in the order
     private ArrayList<Product> products;
     // Status of the order
-    private String status; // created, in-process
+    private String status; // completed, in-process
     private double promotionDiscount;
 
     /*

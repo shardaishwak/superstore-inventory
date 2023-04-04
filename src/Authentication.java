@@ -112,7 +112,7 @@ public class Authentication {
                 String email = scanner.nextLine();
 
                 if (withValidation && email.indexOf('@') == -1) throw new Exception("Invalid email format. Should be yourname@something.other");
-                if (withValidation && isEmailExist(email)) throw new Exception("Email already in user.");
+                if (withValidation && isEmailExist(email)) throw new Exception("Email already in use.");
 
                 return email;
             } catch(Exception err) {

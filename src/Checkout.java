@@ -22,13 +22,13 @@ public class Checkout {
         while(true) {
             try {
                 System.out.println("Enter the Phone number: ");
-                PHnum = s.nextLong();
+                long phoneNumber = s.nextLong();
 
-                if (WithValidation && !PhisValid(PHnum)) {
+                if (WithValidation && !PhisValid(phoneNumber)) {
                     throw new Exception("Invalid Phone Number. Must have 10 digits");
                 }
 
-                return PHnum;
+                return phoneNumber;
             } catch(Exception err) {
                 System.out.println("ERROR: " + err.getMessage());
             }
@@ -56,13 +56,13 @@ public class Checkout {
         while(true) {
             try {
                 System.out.println("Enter the Card number: ");
-                Cnum = s.nextLong();
+                long creditCardNumber = s.nextLong();
 
-                if (WithValidation && !CardIsValid(Cnum)) {
+                if (WithValidation && !CardIsValid(creditCardNumber)) {
                     throw new Exception("Invalid Card Number.");
                 }
 
-                return Cnum;
+                return creditCardNumber;
             } catch(Exception err) {
                 System.out.println("ERROR: " + err.getMessage());
             }

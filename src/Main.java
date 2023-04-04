@@ -285,6 +285,10 @@ public class Main {
                 System.out.println(auth.getCurrentUser());
                 break;
             }
+            case "update-password": {
+                auth.updatePassword();
+                break;
+            }
             case "logout": {
                 auth.logout();
                 break;
